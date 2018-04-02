@@ -34,7 +34,7 @@ def file_write(i):
 	#Object number 1
 	template_file.write(" 0) sersic\n") #object type
 	template_file.write(" 1) 100.0 100.0 0 0\n")#position x y
-	template_file.write(" 3) 20.0890 0\n")#Integrated Magnitude
+	template_file.write(" 3) "+str(inte_mag[i])+" 0\n")#Integrated Magnitude
 	template_file.write(" 4) "+str(half_light_radius[i])+" 0\n")#R_e (half-light radius)   [pix]
 	template_file.write(" 5) "+str(sersic_idx[i])+" 0\n")#Sersic index n (de Vaucouleurs n=4)
 	template_file.write(" 6) 0.0000 0\n") 
@@ -64,11 +64,12 @@ if __name__ == '__main__':
 	half_light_radius = np.random.uniform(1.0,4.0,NUM_ITER)
 	axis_ratio = np.random.uniform(0.2,0.8,NUM_ITER)
 	position_angle = np.random.uniform(-90.0,90.0,NUM_ITER)
+	inte_mag = np.random.uniform(18.0,26.0,NUM_ITER)
 
 	#store all generated parameter values corresponding to the images in a file
 	para_file = open("sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###
-	stacked_para = np.column_stack((sersic_idx,half_light_radius,axis_ratio,position_angle))
-	np.savetxt(para_file,stacked_para,delimiter=" ",header="sersic_idx R_e axis_ratio PA",fmt="%.4f")
+	stacked_para = np.column_stack((sersic_idx,half_light_radius,axis_ratio,position_angle,inte_mag))
+	np.savetxt(para_file,stacked_para,delimiter=" ",header="sersic_idx R_e axis_ratio PA Inte_Mag",fmt="%.4f")
 	para_file.close()
 
 	print("Parameters generated....Creating Text files\n")
