@@ -75,4 +75,4 @@ if __name__ == '__main__':
 
 	pl = Pool(NUM_THREADS)
 	pl.map(file_write,range(0,NUM_ITER))
-
+	
