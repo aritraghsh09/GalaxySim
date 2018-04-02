@@ -3,22 +3,26 @@
 # 
 #  Aritra Ghosh
 #
-#  A python script to generate GalSim Template files
+#  A python script to generate GALFIT Template files
 #############################################
 
 from multiprocessing import Pool
 import numpy as np
 
+NUM_ITER = 2
+NUM_THREADS = 2	
+FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/" 
+IMG_PATH = "/net/urry/ag2422/gal_sim_images_0/"
 	
 def file_write(i):
 
-	template_file = open('galfit_temp_'+str(i),'w')
+	template_file = open(FILE_PATH + 'galfit_temp_'+str(i),'w')
 
 	template_file.write("===============================================================================\n")
 
 	#File parameters	
 	template_file.write("A) gal.fits\n")  # Input data image (FITS file)
-	template_file.write("B) output_img_"+str(i)+".fits"+"\n") # Output data image block
+	template_file.write("B) "+IMG_PATH+"output_img_"+str(i)+".fits"+"\n") # Output data image block
 	template_file.write("C) none\n") #Sigma Image
 	template_file.write("D) none\n") #PSF
 	template_file.write("E) 1\n") #PSF fine sampling factor relative to data
@@ -56,8 +60,6 @@ def file_write(i):
 
 if __name__ == '__main__':
 	
-	NUM_ITER = 2
-	NUM_THREADS = 2	
 
 	#Draw the parameters for the sersic object from appropriate distributions
 	sersic_idx = np.random.uniform(0.5, 10, NUM_ITER)
@@ -67,7 +69,7 @@ if __name__ == '__main__':
 	inte_mag = np.random.uniform(18.0,26.0,NUM_ITER)
 
 	#store all generated parameter values corresponding to the images in a file
-	para_file = open("sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###
+	para_file = open(FILE_PATH+"sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###
 	stacked_para = np.column_stack((sersic_idx,half_light_radius,axis_ratio,position_angle,inte_mag))
 	np.savetxt(para_file,stacked_para,delimiter=" ",header="sersic_idx R_e axis_ratio PA Inte_Mag",fmt="%.4f")
 	para_file.close()

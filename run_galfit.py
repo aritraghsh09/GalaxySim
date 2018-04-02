@@ -10,17 +10,17 @@ from multiprocessing import Pool
 import os
 import numpy as np
 
+NUM_THREADS = 2
+NUM_FILES = 2
+FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/"
 
 def run_galfit(x):
-	command = "~/local_soft/galfit galfit_temp_"+str(x)
-	print "~/local_soft/galfit galfit_temp_"+str(x)
+	command = "~/local_soft/galfit "+FILE_PATH+"galfit_temp_" + str(x)
 	out = os.system(command)
 	return out
 
-if __name__ == '__main__':
 
-	NUM_THREADS = 2
-	NUM_FILES = 2
+if __name__ == '__main__':
 
 	pl = Pool(NUM_THREADS)
 	exit_codes = pl.map(run_galfit,range(0,NUM_FILES))
