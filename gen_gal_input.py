@@ -22,6 +22,7 @@ stacked_para = np.column_stack((sersic_idx,half_light_radius,axis_ratio,position
 np.savetxt(para_file,stacked_para,delimiter=" ",header="sersic_idx R_e axis_ratio PA",fmt="%.4f")
 para_file.close()
 
+print("Parameters generated....Creating Text files\n")
 
 for i in range(0,NUM_ITER):
 	
