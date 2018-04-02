@@ -14,7 +14,8 @@ import numpy as np
 def run_galfit(x):
 	command = "~/local_soft/galfit galfit_temp_"+str(x)
 	print "~/local_soft/galfit galfit_temp_"+str(x)
-	os.system(command)
+	out = os.system(command)
+	return out
 
 if __name__ == '__main__':
 
@@ -22,7 +23,7 @@ if __name__ == '__main__':
 	NUM_FILES = 2
 
 	pl = Pool(NUM_THREADS)
-	pl.map(run_galfit,range(0,NUM_FILES))
-	
-	#all(i == 0 for i in exit_codes)
+	exit_codes = pl.map(run_galfit,range(0,NUM_FILES))
 
+	bool = all(i == 0 for i in exit_codes)
+	print bool #if FALSE is printed. Somethin went wrong. Check
