@@ -10,12 +10,12 @@ from multiprocessing import Pool
 import os
 import numpy as np
 
-NUM_THREADS = 2
-NUM_FILES = 2
+NUM_THREADS = 15
+NUM_FILES = 100000
 FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/"
 
 def run_galfit(x):
-	command = "~/local_soft/galfit "+FILE_PATH+"galfit_temp_" + str(x)
+	command = "~/local_soft/galfit "+FILE_PATH+"galfit_temp_" + str(x) + " > /dev/null 2>&1"
 	out = os.system(command)
 	return out
 
