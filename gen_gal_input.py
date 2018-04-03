@@ -8,11 +8,13 @@
 
 from multiprocessing import Pool
 import numpy as np
+import time
 
 NUM_ITER = 2
-NUM_THREADS = 2	
-FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/" 
-IMG_PATH = "/net/urry/ag2422/gal_sim_images_0/"
+NUM_THREADS = 1	
+#FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/" 
+#IMG_PATH = "/net/urry/ag2422/gal_sim_images_0/"
+FILE_PATH = IMG_PATH = "./"
 	
 def file_write(i):
 
@@ -60,13 +62,15 @@ def file_write(i):
 
 if __name__ == '__main__':
 	
-
+	start_timestamp = time.time()
+	
 	#Draw the parameters for the sersic object from appropriate distributions
 	sersic_idx = np.random.uniform(0.5, 10, NUM_ITER)
 	half_light_radius = np.random.uniform(1.0,4.0,NUM_ITER)
 	axis_ratio = np.random.uniform(0.2,0.8,NUM_ITER)
 	position_angle = np.random.uniform(-90.0,90.0,NUM_ITER)
-	inte_mag = np.random.uniform(18.0,26.0,NUM_ITER)
+	inte_mag = np.random.uniform(18.0,26.0,NUM_ITER)	
+
 
 	#store all generated parameter values corresponding to the images in a file
 	para_file = open(FILE_PATH+"sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###
@@ -74,8 +78,9 @@ if __name__ == '__main__':
 	np.savetxt(para_file,stacked_para,delimiter=" ",header="sersic_idx R_e axis_ratio PA Inte_Mag",fmt="%.4f")
 	para_file.close()
 
-	print("Parameters generated....Creating Text files\n")
+	print( "Parameters generated. Real time taken:- %s seconds\nCreating Files....." %(time.time() - start_timestamp) )
 
 	pl = Pool(NUM_THREADS)
 	pl.map(file_write,range(0,NUM_ITER))
 	
+	print("Finished.Real Time of Execution:- %s seconds" % (time.time() - start_timestamp) )
