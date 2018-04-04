@@ -1,7 +1,5 @@
 ############################################
 #  gen_gal_template.py
-# 
-#  Aritra Ghosh
 #
 #  A python script to generate GALFIT Template files
 #############################################

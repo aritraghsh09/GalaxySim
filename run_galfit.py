@@ -1,8 +1,6 @@
 ################################################
 # run_galfit.py
 #
-# Aritra Ghosh
-#
 # Python script to run GALFIT on created parameter files
 #################################################
 
