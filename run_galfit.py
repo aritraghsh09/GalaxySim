@@ -10,10 +10,10 @@ import numpy as np
 import time
 import pickle
 
-NUM_FILES = 2
-NUM_THREADS = 1
-#FILE_PATH = "/net/urry/ag2422/gal_sim_files_0/"
-FILE_PATH = "./"
+NUM_FILES = 100000
+NUM_THREADS = 15
+FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_1/"
+#FILE_PATH = "./"
 
 def run_galfit(x):
 	command = "~/local_soft/galfit "+FILE_PATH+"galfit_temp_" + str(x) + " > /dev/null 2>&1" #Suppresses Screen I/O. Remove the end-part if you don't want this. 
