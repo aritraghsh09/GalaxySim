@@ -3,7 +3,7 @@
 #
 #   Aritra Ghosh
 #
-#   This script is meant to do extra processing to all the simulated images -- Convolve with the suitable PSF--add the noise and redshift them with FERENGI
+#   This script is meant to do extra processing to all the simulated images -- Convolve with the suitable PSF--add the noise.
 ############################################
 
 import numpy as np
@@ -13,10 +13,10 @@ from astropy.io import fits
 from multiprocessing import Pool
 from astropy.convolution import convolve
 
-dataReadPath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_6/'
-dataWritePath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_6_extra_proc_i/'
-psfFilePath = "/net/urry/ag2422/powell_17_data/GOODSN_ACS_cutouts/goodss_3dhst.v4.0.F775W_psf.fits"
-noiseFilePath = '/net/urry/ag2422/noise_images/noise_si.npy'
+dataReadPath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_8/'
+dataWritePath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_8_extra_proc/'
+psfFilePath = "/net/urry/ag2422/sdss_btr_data/psf/psf_000752-4-0320_g.fit"
+noiseFilePath = '/net/urry/ag2422/noise_images/sdss_noise/noise_g.npy'
 
 NUM_FILES_TOTAL = 100000
 NUM_THREADS = 15
@@ -39,11 +39,11 @@ def psf_and_noise(i):
 
 
 pl = Pool(NUM_THREADS)
-#pl.map(convolve_psf,range(0,NUM_FILES_TOTAL))
+pl.map(psf_and_noise,range(0,NUM_FILES_TOTAL))
 
 #if you don't want this just replace this with the previous line
 #this next line does the same thing as the pool call above, but now with a progress bar
-for _ in tqdm.tqdm(pl.imap_unordered(psf_and_noise,range(0,NUM_FILES_TOTAL)), total=NUM_FILES_TOTAL):
-	pass
+#for _ in tqdm.tqdm(pl.imap_unordered(psf_and_noise,range(0,NUM_FILES_TOTAL)), total=NUM_FILES_TOTAL):
+#	pass
 
 
