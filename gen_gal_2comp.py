@@ -9,11 +9,12 @@
 from multiprocessing import Pool
 import numpy as np
 import time
+import tqdm
 
-NUM_ITER = 1    #number of galaxies.
-NUM_THREADS = 1    #number of threads available	
-FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_7/" 
-IMG_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_images_7/"
+NUM_ITER = 100000    #number of galaxies.
+NUM_THREADS = 15    #number of threads available	
+FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_9/" 
+IMG_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_images_9/"
 #FILE_PATH = IMG_PATH = "./"
 	
 def file_write(i):
@@ -32,8 +33,8 @@ def file_write(i):
 	template_file.write("G) none\n")
 	template_file.write("H) 1 167 1 167\n") #Image region to fit (xmin xmax ymin ymax)
 	template_file.write("I) 167 167\n") #Size of the convolution box (x y)
-	template_file.write("J) 24.780158\n") # Magnitude photometric zeropoint 
-	template_file.write("K) 0.030 0.030\n")# Plate scale (dx dy)    [arcsec per pixel] 
+	template_file.write("J) 25.11\n") # Magnitude photometric zeropoint 
+	template_file.write("K) 0.396 0.396\n")# Plate scale (dx dy)    [arcsec per pixel] 
 	template_file.write("O) regular\n") # Display type (regular, curses, both)
 	template_file.write("P) 1\n\n") # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 	
@@ -81,24 +82,40 @@ if __name__ == '__main__':
 	start_timestamp = time.time()
 	
 	#Draw the parameters for the sersic object from appropriate distributions
-	sersic_idx = np.random.uniform(0.0, 10.0, NUM_ITER)
-	half_light_radius = np.random.uniform(3.5,20.0,NUM_ITER)
-	axis_ratio = np.random.uniform(0.1,1.0,NUM_ITER)
+	#Disk Comp.
+	sersic_idx = np.array([1.0]*NUM_ITER)
+	half_light_radius = np.random.uniform(10.0,30.0,NUM_ITER)
+	axis_ratio = np.random.uniform(0.3,1.0,NUM_ITER)
 	position_angle = np.random.uniform(-90.0,90.0,NUM_ITER)
-	inte_mag = np.random.uniform(15.0,29.0,NUM_ITER)	
+	inte_mag = np.random.uniform(15.0,22.0,NUM_ITER)	
 	x_pos = np.random.uniform(75.0,92.0,NUM_ITER)	
 	y_pos = np.random.uniform(75.0,92.0,NUM_ITER)	
 	
-	sersic_idx_2 = np.random.uniform(0.0, 10.0, NUM_ITER)
-	half_light_radius_2 = np.random.uniform(3.5,20.0,NUM_ITER)
-	axis_ratio_2 = np.random.uniform(0.1,1.0,NUM_ITER)
-	position_angle_2 = np.random.uniform(-90.0,90.0,NUM_ITER)
-	inte_mag_2 = np.random.uniform(15.0,29.0,NUM_ITER)	
-	x_pos_2 = np.random.uniform(75.0,92.0,NUM_ITER)	
-	y_pos_2 = np.random.uniform(75.0,92.0,NUM_ITER)	
+	#Bulge Comp.
+	sersic_idx_2 = np.array([4.0]*NUM_ITER)
+	half_light_radius_2 = np.random.uniform(4.0,17.0,NUM_ITER)
+	axis_ratio_2 = np.random.uniform(0.3,1.0,NUM_ITER)
+	position_angle_2 = position_angle + np.random.uniform(-15,15,NUM_ITER) 
+	#inte_mag_2 = inte_mag + np.random.uniform(-3.2,3.2,NUM_ITER)	
+	inte_mag_2 = []
+	x_pos_2 = x_pos + np.random.normal(scale=0.025,size=NUM_ITER)*x_pos
+	y_pos_2 = y_pos + np.random.normal(scale=0.025,size=NUM_ITER)*y_pos 
+	
+	for mag in inte_mag:
+		
+		if mag < 18.2:
+			mag_2 = mag + np.random.uniform(15.0 - mag ,3.2)
+		elif 18.2 < mag < 18.8:
+			mag_2 = mag + np.random.uniform(-3.2,3.2)
+		else
+			mag_2 = mag + np.random.uniform(-3.2, 22.0 - mag)
 
-	sky_back = np.random.choice(np.genfromtxt(FILE_PATH+"norm_skyval.txt"),NUM_ITER)	
+		inte_mag_2.append(mag_2)
 
+	inte_mag_2 = np.array(inte_mag_2)
+
+	#sky_back = np.random.choice(np.genfromtxt(FILE_PATH+"norm_skyval.txt"),NUM_ITER)	
+	sky_back = np.random.uniform(0.01,0.05,NUM_ITER)
 
 	#store all generated parameter values corresponding to the images in a file
 	para_file = open(FILE_PATH+"sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###
@@ -109,6 +126,9 @@ if __name__ == '__main__':
 	print( "Parameters generated. Real time taken:- %s seconds\nCreating Files....." %(time.time() - start_timestamp) )
 
 	pl = Pool(NUM_THREADS)
-	pl.map(file_write,range(0,NUM_ITER))  #This just call the function file_write with the input variables being range(0,NUM_ITER)
+	#pl.map(file_write,range(0,NUM_ITER))  #This just call the function file_write with the input variables being range(0,NUM_ITER)
 	
-	print("Finished.Real Time of Execution:- %s seconds" % (time.time() - start_timestamp) )
+	for _ in tqdm.tqdm(pl.imap_unordered(file_write,range(0,NUM_ITER)), total=NUM_ITER):
+                pass
+
+	#print("Finished.Real Time of Execution:- %s seconds" % (time.time() - start_timestamp) )
