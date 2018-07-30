@@ -107,7 +107,7 @@ if __name__ == '__main__':
 			mag_2 = mag + np.random.uniform(15.0 - mag ,3.2)
 		elif 18.2 < mag < 18.8:
 			mag_2 = mag + np.random.uniform(-3.2,3.2)
-		else
+		else:
 			mag_2 = mag + np.random.uniform(-3.2, 22.0 - mag)
 
 		inte_mag_2.append(mag_2)
