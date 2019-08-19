@@ -13,8 +13,8 @@ import tqdm
 
 NUM_ITER = 100000    #number of galaxies.
 NUM_THREADS = 15    #number of threads available	
-FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_9/" 
-IMG_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_images_9/"
+FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_13/" 
+IMG_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_images_13/"
 #FILE_PATH = IMG_PATH = "./"
 	
 def file_write(i):
@@ -31,10 +31,10 @@ def file_write(i):
 	template_file.write("E) 1\n") #PSF fine sampling factor relative to data
 	template_file.write("F) none\n")
 	template_file.write("G) none\n")
-	template_file.write("H) 1 167 1 167\n") #Image region to fit (xmin xmax ymin ymax)
-	template_file.write("I) 167 167\n") #Size of the convolution box (x y)
-	template_file.write("J) 25.11\n") # Magnitude photometric zeropoint 
-	template_file.write("K) 0.396 0.396\n")# Plate scale (dx dy)    [arcsec per pixel] 
+	template_file.write("H) 1 83 1 83\n") #Image region to fit (xmin xmax ymin ymax)
+	template_file.write("I) 83 83\n") #Size of the convolution box (x y)
+	template_file.write("J) 25.95\n") # Magnitude photometric zeropoint 
+	template_file.write("K) 0.06 0.06\n")# Plate scale (dx dy)    [arcsec per pixel] 
 	template_file.write("O) regular\n") # Display type (regular, curses, both)
 	template_file.write("P) 1\n\n") # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 	
@@ -84,38 +84,38 @@ if __name__ == '__main__':
 	#Draw the parameters for the sersic object from appropriate distributions
 	#Disk Comp.
 	sersic_idx = np.array([1.0]*NUM_ITER)
-	half_light_radius = np.random.uniform(10.0,30.0,NUM_ITER)
-	axis_ratio = np.random.uniform(0.3,1.0,NUM_ITER)
+	half_light_radius = np.random.uniform(1.0,20.0,NUM_ITER)
+	axis_ratio = np.random.uniform(0.25,1.0,NUM_ITER)
 	position_angle = np.random.uniform(-90.0,90.0,NUM_ITER)
-	inte_mag = np.random.uniform(15.0,22.0,NUM_ITER)	
-	x_pos = np.random.uniform(75.0,92.0,NUM_ITER)	
-	y_pos = np.random.uniform(75.0,92.0,NUM_ITER)	
+	inte_mag = np.random.uniform(19.0,30.0,NUM_ITER)	
+	x_pos = np.random.uniform(39.43,43.57,NUM_ITER)	
+	y_pos = np.random.uniform(39.43,43.57,NUM_ITER)	
 	
 	#Bulge Comp.
 	sersic_idx_2 = np.array([4.0]*NUM_ITER)
-	half_light_radius_2 = np.random.uniform(4.0,17.0,NUM_ITER)
-	axis_ratio_2 = np.random.uniform(0.3,1.0,NUM_ITER)
+	half_light_radius_2 = np.random.uniform(1.0,14.0,NUM_ITER)
+	axis_ratio_2 = np.random.uniform(0.25,1.0,NUM_ITER)
 	position_angle_2 = position_angle + np.random.uniform(-15,15,NUM_ITER) 
-	#inte_mag_2 = inte_mag + np.random.uniform(-3.2,3.2,NUM_ITER)	
-	inte_mag_2 = []
+	inte_mag_2 = inte_mag + np.random.uniform(-3.2,3.2,NUM_ITER)	
+	#inte_mag_2 = []
 	x_pos_2 = x_pos + np.random.normal(scale=0.025,size=NUM_ITER)*x_pos
 	y_pos_2 = y_pos + np.random.normal(scale=0.025,size=NUM_ITER)*y_pos 
 	
-	for mag in inte_mag:
-		
-		if mag < 18.2:
-			mag_2 = mag + np.random.uniform(15.0 - mag ,3.2)
-		elif 18.2 < mag < 18.8:
-			mag_2 = mag + np.random.uniform(-3.2,3.2)
-		else:
-			mag_2 = mag + np.random.uniform(-3.2, 22.0 - mag)
-
-		inte_mag_2.append(mag_2)
-
-	inte_mag_2 = np.array(inte_mag_2)
+	#for mag in inte_mag:
+	#	
+	#	if mag < 20.2:
+	#		mag_2 = mag + np.random.uniform(17.0 - mag ,3.2)
+	#	elif 20.2 < mag < 24.6:
+	#		mag_2 = mag + np.random.uniform(-3.2,3.2)
+	#	else:
+	#		mag_2 = mag + np.random.uniform(-3.2, 27.8 - mag)
+	#
+	#	inte_mag_2.append(mag_2)
+	#
+	#inte_mag_2 = np.array(inte_mag_2)
 
 	#sky_back = np.random.choice(np.genfromtxt(FILE_PATH+"norm_skyval.txt"),NUM_ITER)	
-	sky_back = np.random.uniform(0.01,0.05,NUM_ITER)
+	sky_back = np.random.uniform(0.001,0.005,NUM_ITER)
 
 	#store all generated parameter values corresponding to the images in a file
 	para_file = open(FILE_PATH+"sim_para.txt","w") ###MAKE THIS .GZ later if size is a problem###

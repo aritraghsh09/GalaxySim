@@ -13,21 +13,21 @@ from astropy.io import fits
 from multiprocessing import Pool
 from astropy.convolution import convolve
 
-dataReadPath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_8/'
-dataWritePath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_8_extra_proc/'
-psfFilePath = "/net/urry/ag2422/sdss_btr_data/psf/psf_000752-4-0320_g.fit"
-noiseFilePath = '/net/urry/ag2422/noise_images/sdss_noise/noise_g.npy'
+dataReadPath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_13/'
+dataWritePath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_13_extra_proc/'
+psfFilePath = '/net/urry/ag2422/candels_cutouts/model_psf/vdwel_2012_psf/COSMOS/psfH.fits'
+noiseFilePath = '/net/urry/ag2422/noise_images/candels_noise/noise_egs.npy'
 
 NUM_FILES_TOTAL = 100000
 NUM_THREADS = 15
-IMG_WIDTH = IMG_HEIGHT = 167 #No of pixels length/width -wise in each cutout
+IMG_WIDTH = IMG_HEIGHT = 83 #No of pixels length/width -wise in each cutout
 
 noise = np.load(noiseFilePath)
 
 def psf_and_noise(i):
 	img_data = fits.getdata(dataReadPath+"output_img_"+str(i)+".fits",memmap=False)
 	psf_data = fits.getdata(psfFilePath, memmap=False)
-	convolved_data = convolve(img_data,psf_data)
+	convolved_data = convolve(img_data,psf_data,boundary='extend')
 	final_data = convolved_data + np.random.choice(noise,size=(IMG_WIDTH,IMG_HEIGHT))	
 
 	hdu = fits.PrimaryHDU(final_data)
