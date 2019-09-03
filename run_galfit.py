@@ -12,7 +12,7 @@ import pickle
 
 NUM_FILES = 100000
 NUM_THREADS = 15
-FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_13/"
+FILE_PATH = "./"
 #FILE_PATH = "./"
 
 def run_galfit(x):
