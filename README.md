@@ -1,6 +1,6 @@
 # GalaxySim
 
-GalaxySim is a simple repository to simulate Galaxies in batch mode using GALFIT (https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). The code in the repository makes use of GALFIT to simulate galaxies with single and double Sersic componenets. 
+GalaxySim is a simple repository to simulate Galaxies in batch mode using GALFIT (https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). The code in the repository makes use of GALFIT and Python's multiprocessing library to simulate galaxies with single and double Sersic componenets. 
 
 ### Usage Info/Citation/Reference
 This repository was used in the work pertaining to the following paper:-
