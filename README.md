@@ -1,6 +1,6 @@
 # GalaxySim
 
-GalaxySim is a repository to simulate large numbers of galaxies in parallel using GALFIT (https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). The code in the repository makes use of GALFIT and Python's multiprocessing library.
+GalaxySim is a repository to simulate large numbers of galaxies in parallel using [GALFIT](https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). The code in the repository makes use of GALFIT and Python's multiprocessing library.
 
 ### Usage Info/Citation/Reference
 This repository was used in the work pertaining to the following paper:-
