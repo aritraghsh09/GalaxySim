@@ -13,10 +13,10 @@ from astropy.io import fits
 from multiprocessing import Pool
 from astropy.convolution import convolve
 
-dataReadPath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_13/'
-dataWritePath = '/net/urry/ag2422/gal_sim_runs/gal_sim_images_13_extra_proc/'
-psfFilePath = '/net/urry/ag2422/candels_cutouts/model_psf/vdwel_2012_psf/COSMOS/psfH.fits'
-noiseFilePath = '/net/urry/ag2422/noise_images/candels_noise/noise_egs.npy'
+dataReadPath = ''
+dataWritePath = ''
+psfFilePath = ''
+noiseFilePath = ''
 
 NUM_FILES_TOTAL = 100000
 NUM_THREADS = 15
