@@ -4,7 +4,7 @@ GalaxySim is a repository to simulate large numbers of galaxies in parallel usin
 
 ### Usage Info/Citation/Reference
 This repository was used in the work pertaining to the following paper:-
-"Galaxy Morphology Network (GaMorNet):  A Convolutional Neural Network used to study morphology andquenching in ∼100,000 SDSS and ∼20,000 CANDELS galaxies" , Ghosh et. al.
+"Galaxy Morphology Network (GaMorNet):  A Convolutional Neural Network used to study morphology and quenching in ∼100,000 SDSS and ∼20,000 CANDELS galaxies" , Ghosh et. al.
 If you use this code for any published work, please cite the above paper and include a link to this GitHub repository
 
 This code is being made available under a GNU General Public License v3.0. Please see the file called LICENSE in the repository for more details.
