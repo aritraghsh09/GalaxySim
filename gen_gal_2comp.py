@@ -13,8 +13,8 @@ import tqdm
 
 NUM_ITER = 100000    #number of galaxies.
 NUM_THREADS = 15    #number of threads available	
-FILE_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_files_13/" 
-IMG_PATH = "/net/urry/ag2422/gal_sim_runs/gal_sim_images_13/"
+FILE_PATH = "" 
+IMG_PATH = ""
 #FILE_PATH = IMG_PATH = "./"
 	
 def file_write(i):
