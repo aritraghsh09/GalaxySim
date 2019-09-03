@@ -13,7 +13,7 @@ This code is being made available under a GNU General Public License v3.0. Pleas
 ### How to Run Galaxy Sim?
 
 #### Installation
-Galaxy Sim is written in Python and the primary pre-requisite is GALFIT. Instllation instructions for GALFIT can be found [here] (https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). 
+Galaxy Sim is written in Python and the primary pre-requisite is GALFIT. Instllation instructions for GALFIT can be found [here](https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). 
 
 Other than GALFIT, Galaxy Sim depends on the following Python libraries:- numpy, tqdm (if you want a progress bar), pickle, multiprocessing
 
